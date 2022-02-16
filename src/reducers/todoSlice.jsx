@@ -12,15 +12,31 @@ export const todoSlice = createSlice({
 
       prepare: (text) => {
         const id = nanoid();
-        const isComplete = false;
-        return { payload: { id, text, isComplete } };
+        const isCompleted = false;
+        const isEditing = false;
+        return {
+          payload: {
+            id, text, isCompleted, isEditing,
+          },
+        };
       },
     },
     remove: (state, action) => state.filter((todo) => todo.id !== action.payload),
-    setComplete: (state, action) => state.map((todo) => ({
+    setCompleted: (state, action) => state.map((todo) => ({
       ...todo,
       isComplete: action?.payload === todo.id ? true : todo.isComplete,
     })),
+    setEdit: (state, action) => state.map((todo) => ({
+      ...todo,
+      isEditing: action?.payload.id === todo.id ? action?.payload.isEditing : todo.isEditing,
+    })),
+    edit: (state, action) => state.map(
+      (todo) => ({
+        ...todo,
+        isEditing: action?.payload.id === todo.id ? false : todo.isEditing,
+        text: action?.payload.id === todo.id ? action?.payload.text : todo.text,
+      }),
+    ),
   },
 });
 

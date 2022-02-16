@@ -11,7 +11,7 @@ export default function TodoList({ todoList }) {
   };
 
   return (
-    <Grid item xs={6} style={todoItemStyle} spacing={2}>
+    <Grid item xs={6} style={todoItemStyle}>
       {todoList.map(
         (todo) => (
           <TodoItem
